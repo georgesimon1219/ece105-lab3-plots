@@ -67,3 +67,62 @@ def plot_scatter(sensor_a, sensor_b, timestamps, ax):
     ax.set_ylabel('Temperature (°C)')
     ax.set_title('Sensor Temperature Readings vs Time')
     ax.legend()
+
+    # Create plot_histogram(sensor_a, sensor_b, ax) that draws
+# the overlaid histogram from the notebook onto the given Axes object.
+# NumPy-style docstring. Modifies ax in place, returns None.
+
+def plot_histogram(sensor_a, sensor_b, ax):
+    """Draw an overlaid histogram of sensor temperature distributions.
+
+    Parameters
+    ----------
+    sensor_a : numpy.ndarray
+        Temperature readings from sensor A in Celsius, shape (200,).
+    sensor_b : numpy.ndarray
+        Temperature readings from sensor B in Celsius, shape (200,).
+    ax : matplotlib.axes.Axes
+        Axes object to draw the plot on.
+
+    Returns
+    -------
+    None
+    """
+    ax.hist(sensor_a, bins=30, alpha=0.5, color='blue', label='Sensor A')
+    ax.hist(sensor_b, bins=30, alpha=0.5, color='orange', label='Sensor B')
+    ax.axvline(sensor_a.mean(), color='blue', linestyle='dashed', linewidth=1.5, label='Mean A')
+    ax.axvline(sensor_b.mean(), color='orange', linestyle='dashed', linewidth=1.5, label='Mean B')
+    ax.set_xlabel('Temperature (°C)')
+    ax.set_ylabel('Count')
+    ax.set_title('Temperature Distribution: Sensor A vs Sensor B')
+    ax.legend()
+
+
+# Create plot_boxplot(sensor_a, sensor_b, ax) that draws
+# the box plot from the notebook onto the given Axes object.
+# NumPy-style docstring. Modifies ax in place, returns None.
+
+def plot_boxplot(sensor_a, sensor_b, ax):
+    """Draw a side-by-side box plot of sensor temperature distributions.
+
+    Parameters
+    ----------
+    sensor_a : numpy.ndarray
+        Temperature readings from sensor A in Celsius, shape (200,).
+    sensor_b : numpy.ndarray
+        Temperature readings from sensor B in Celsius, shape (200,).
+    ax : matplotlib.axes.Axes
+        Axes object to draw the plot on.
+
+    Returns
+    -------
+    None
+    """
+    ax.boxplot([sensor_a, sensor_b], labels=['Sensor A', 'Sensor B'])
+    overall_mean = np.concatenate([sensor_a, sensor_b]).mean()
+    ax.axhline(overall_mean, color='red', linestyle='dashed', linewidth=1.5,
+               label=f'Overall Mean: {overall_mean:.1f}°C')
+    ax.set_xlabel('Sensor')
+    ax.set_ylabel('Temperature (deg C)')
+    ax.set_title('Sensor Temperature Distribution Comparison')
+    ax.legend()
